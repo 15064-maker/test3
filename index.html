@@ -11,31 +11,33 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Noto Sans KR & Serif -->
+    <!-- Google Fonts: Space Grotesk, Noto Serif KR & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Serif+KR:wght@400;600;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        navy: {
-                            800: '#1e293b',
-                            900: '#0f172a',
-                            950: '#020617',
-                        },
-                        academic: {
-                            blue: '#1e3a8a',
-                            gold: '#b45309',
-                            gray: '#f8fafc',
-                            border: '#e2e8f0'
+                        editorial: {
+                            bg: '#0c0e12',
+                            card: '#14171f',
+                            panel: '#1a1e29',
+                            border: '#2a3040',
+                            accent: '#38bdf8',
+                            amber: '#f59e0b',
+                            crimson: '#f43f5e',
+                            green: '#10b981',
+                            text: '#f1f5f9',
+                            muted: '#94a3b8'
                         }
                     },
                     fontFamily: {
-                        sans: ['Noto Sans KR', 'sans-serif'],
+                        sans: ['Space Grotesk', 'Noto Sans KR', 'sans-serif'],
                         serif: ['Noto Serif KR', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
                     }
                 }
             }
@@ -43,354 +45,399 @@
     </script>
     <style>
         body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: #f8fafc;
-            color: #1e293b;
+            font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
+            background-color: #0c0e12;
+            color: #f1f5f9;
         }
-        .academic-header {
-            border-bottom: 3px solid #1e3a8a;
+        .mono-num {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        /* Custom subtle grid background */
+        .bg-grid-pattern {
+            background-size: 32px 32px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
         }
         canvas {
             touch-action: none;
         }
+        input[type=range] {
+            accent-color: #38bdf8;
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body class="min-h-screen flex flex-col justify-between bg-grid-pattern selection:bg-sky-500 selection:text-slate-950">
 
-    <!-- Header / Navigation -->
-    <header class="bg-navy-900 text-white sticky top-0 z-50 shadow-md">
+    <!-- Header / Editorial Navigation -->
+    <header class="bg-editorial-card/90 backdrop-blur border-b border-editorial-border sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <div class="flex items-center space-x-3">
-                    <i class="fa-solid font-serif text-2xl text-blue-400"> Kinematics & Dynamics</i>
-                    <span class="text-xs bg-blue-900 border border-blue-600 px-2 py-0.5 rounded text-blue-200">KIN-101</span>
+                <div class="flex items-center space-x-4">
+                    <span class="text-xs font-mono px-2 py-1 bg-sky-950 text-sky-400 border border-sky-800 tracking-wider">KIN-101</span>
+                    <a href="#" class="font-serif font-black text-lg tracking-tight text-white hover:text-sky-400 transition">
+                        BIOMECHANICS<span class="text-sky-400">.LAB</span>
+                    </a>
                 </div>
-                <nav class="hidden md:flex space-x-8 text-sm font-medium">
-                    <a href="#overview" class="hover:text-blue-300 transition">강의 개요</a>
-                    <a href="#vector" class="hover:text-blue-300 transition">1. 벡터 분석</a>
-                    <a href="#acceleration" class="hover:text-blue-300 transition">2. 운동학 및 가속도</a>
-                    <a href="#forces" class="hover:text-blue-300 transition">3. 역학 및 힘</a>
-                    <a href="#problems" class="hover:text-blue-300 transition">연습 문제</a>
+                <nav class="hidden md:flex items-center space-x-8 text-xs font-mono uppercase tracking-widest text-editorial-muted">
+                    <a href="#overview" class="hover:text-sky-400 transition">Overview</a>
+                    <a href="#vector" class="hover:text-sky-400 transition">01. Vector</a>
+                    <a href="#acceleration" class="hover:text-sky-400 transition">02. Kinematics</a>
+                    <a href="#forces" class="hover:text-sky-400 transition">03. Kinetics</a>
+                    <a href="#problems" class="hover:text-sky-400 transition">04. Problems</a>
                 </nav>
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
-                        <i class="fa-solid fa-bars text-xl"></i>
+                    <button id="mobile-menu-btn" class="text-editorial-muted hover:text-white focus:outline-none">
+                        <i class="fa-solid fa-bars-staggered text-lg"></i>
                     </button>
                 </div>
             </div>
         </div>
-        <!-- Mobile Navigation Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-navy-950 px-4 pt-2 pb-4 space-y-2 text-sm border-t border-slate-800">
-            <a href="#overview" class="block py-1 hover:text-blue-300">강의 개요</a>
-            <a href="#vector" class="block py-1 hover:text-blue-300">1. 벡터 분석</a>
-            <a href="#acceleration" class="block py-1 hover:text-blue-300">2. 운동학 및 가속도</a>
-            <a href="#forces" class="block py-1 hover:text-blue-300">3. 역학 및 힘</a>
-            <a href="#problems" class="block py-1 hover:text-blue-300">연습 문제</a>
+        <!-- Mobile Nav Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-editorial-card border-b border-editorial-border px-6 py-4 space-y-3 font-mono text-xs uppercase tracking-wider">
+            <a href="#overview" class="block hover:text-sky-400">Overview</a>
+            <a href="#vector" class="block hover:text-sky-400">01. Vector Analysis</a>
+            <a href="#acceleration" class="block hover:text-sky-400">02. Kinematics & Accel</a>
+            <a href="#forces" class="block hover:text-sky-400">03. Kinetics & Forces</a>
+            <a href="#problems" class="block hover:text-sky-400">04. Self Assessment</a>
         </div>
     </header>
 
-    <!-- Main Course Container -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow space-y-12">
+    <!-- Main Content Grid -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow space-y-16">
 
-        <!-- Banner Section -->
-        <section id="overview" class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-2 h-full bg-blue-900"></div>
-            <div class="max-w-3xl">
-                <span class="text-xs uppercase tracking-wider text-blue-800 font-bold">Department of Sports & Human Movement Science</span>
-                <h1 class="text-3xl font-serif font-bold text-slate-900 mt-1 mb-3">운동물리학 입문 (Introductory Biomechanics)</h1>
-                <p class="text-slate-600 leading-relaxed text-sm md:text-base">
-                    본 강의는 인체의 운동과 인체에 작용하는 물리적 법칙을 정량적으로 분석하는 기초 과정입니다. 
-                    변위, 속도, 가속도, 힘, 그리고 토크와 같은 핵심 물리량을 **벡터(Vector)**와 **뉴턴 역학(Newtonian Mechanics)** 관점에서 체계적으로 학습합니다.
+        <!-- Hero Section / Editorial Briefing -->
+        <section id="overview" class="border border-editorial-border bg-editorial-card p-8 md:p-12 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-sky-500/5 blur-3xl pointer-events-none"></div>
+            
+            <div class="max-w-4xl space-y-6">
+                <div class="flex items-center space-x-3 text-xs font-mono text-sky-400 uppercase tracking-widest">
+                    <span class="inline-block w-2 h-2 bg-sky-400"></span>
+                    <span>Department of Kinesiology & Sports Science</span>
+                </div>
+                
+                <h1 class="text-3xl md:text-5xl font-serif font-black tracking-tight leading-tight text-white">
+                    운동물리학 입문: 인체 역학의 수학적 해석
+                </h1>
+                
+                <p class="text-editorial-muted text-sm md:text-base leading-relaxed max-w-3xl font-normal">
+                    본 과목은 인체 동작을 직교좌표계 상의 **벡터(Vector)**와 **뉴턴 역학(Newtonian Dynamics)**으로 시각화하고 정량 분석하는 대학교 1학년 학술 과정입니다. 
+                    단순한 감각을 넘어 변위, 가속도, 질량중심 및 지면반발력(GRF)을 엄밀하게 측정하는 물리적 직관을 함양합니다.
                 </p>
-                <div class="mt-6 flex flex-wrap gap-4 text-xs font-semibold text-slate-500">
-                    <span class="bg-slate-100 px-3 py-1.5 rounded-md border border-slate-200"><i class="fa-regular fa-clock mr-1"></i> 주당 3시간 강의 / 1시간 실습</span>
-                    <span class="bg-slate-100 px-3 py-1.5 rounded-md border border-slate-200"><i class="fa-solid fa-graduation-cap mr-1"></i> 대상: 체육학/운동처방학/의공학 1학년</span>
-                    <span class="bg-slate-100 px-3 py-1.5 rounded-md border border-slate-200"><i class="fa-solid fa-book-bookmark mr-1"></i> 선수과목: 기초수학</span>
+
+                <div class="pt-4 grid grid-cols-2 md:grid-cols-4 gap-4 border-t border-editorial-border text-xs font-mono text-editorial-muted">
+                    <div>
+                        <span class="block text-[10px] uppercase text-slate-500">Course ID</span>
+                        <span class="text-white font-medium">KIN-101 / 3 Credits</span>
+                    </div>
+                    <div>
+                        <span class="block text-[10px] uppercase text-slate-500">Prerequisites</span>
+                        <span class="text-white font-medium">Calculus & Physics I</span>
+                    </div>
+                    <div>
+                        <span class="block text-[10px] uppercase text-slate-500">Structure</span>
+                        <span class="text-white font-medium">3h Lecture / 1h Lab</span>
+                    </div>
+                    <div>
+                        <span class="block text-[10px] uppercase text-slate-500">Evaluation</span>
+                        <span class="text-white font-medium">Lab Sim + Exam</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 1: VECTOR ANALYSIS -->
-        <section id="vector" class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-            <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
-                <h2 class="text-lg font-serif font-semibold"><i class="fa-solid fa-location-arrow text-blue-400 mr-2"></i> Module 1. 벡터 분석 (Vector Analysis in Human Motion)</h2>
-                <span class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded">정역학 기초</span>
+        <!-- MODULE 1: VECTOR ANALYSIS -->
+        <section id="vector" class="border border-editorial-border bg-editorial-card">
+            <!-- Header Bar -->
+            <div class="border-b border-editorial-border px-6 py-4 flex flex-wrap items-center justify-between gap-2 bg-editorial-panel/50">
+                <div class="flex items-center space-x-3">
+                    <span class="font-mono text-xs text-sky-400 border border-sky-900 bg-sky-950/60 px-2 py-0.5">MOD-01</span>
+                    <h2 class="font-serif font-bold text-lg text-white">1. 벡터 분석 (Vector Analysis in Human Movement)</h2>
+                </div>
+                <span class="text-xs font-mono text-editorial-muted">STATICS & RESOLUTION</span>
             </div>
 
-            <div class="p-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <!-- Theory & Math -->
-                <div class="lg:col-span-5 space-y-4">
-                    <h3 class="text-md font-bold text-slate-800 border-b pb-2">인체 운동에서의 스칼라와 벡터</h3>
-                    <p class="text-sm text-slate-600 leading-relaxed">
-                        **스칼라(Scalar)**는 크기만을 가리키는 양(질량, 질량중심 깊이, 시간 등)인 반면, **벡터(Vector)**는 크기와 방향을 동시에 포함합니다. 근육이 뼈에 미치는 인장력(Muscle Force)이나 지면반발력(GRF)은 대표적인 벡터량입니다.
-                    </p>
-                    
-                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 text-sm space-y-2">
-                        <div class="font-semibold text-slate-700">벡터의 분해 (Vector Resolution)</div>
-                        <p class="text-xs text-slate-600">직교좌표계에서 임의의 벡터 $\vec{F}$는 $x$축과 $y$축 성분으로 분해됩니다:</p>
-                        <div class="text-center py-2 text-blue-900 bg-white rounded border border-slate-200 font-serif">
-                            $$ F_x = |\vec{F}| \cos(\theta), \quad F_y = |\vec{F}| \sin(\theta) $$
-                        </div>
-                        <p class="text-xs text-slate-500">합력의 크기: $ |\vec{F}_{net}| = \sqrt{(\Sigma F_x)^2 + (\Sigma F_y)^2} $</p>
+            <div class="p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Theory Column -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="space-y-3">
+                        <h3 class="text-sm font-mono uppercase tracking-wider text-sky-400">Concept Definition</h3>
+                        <p class="text-xs md:text-sm text-editorial-muted leading-relaxed">
+                            인체 내 근육의 인장력($\vec{F}_m$)이나 관절에 작용하는 압착력은 크기와 방향을 함께 가지는 **벡터(Vector)**입니다. 
+                            2차원 평면상에서 작용하는 여러 힘은 각 축의 직교 성분($F_x, F_y$)으로 분해하여 합성합니다.
+                        </p>
                     </div>
 
-                    <div class="text-xs text-slate-500 bg-amber-50 border border-amber-200 p-3 rounded">
-                        <strong class="text-amber-800"><i class="fa-solid fa-triangle-exclamation mr-1"></i> 스포츠 응용:</strong> 대퇴사두근(Quadriceps)의 사선 방향 인장력 중 회전력(Rotational Component)과 관절 압착력(Stabilizing Component)의 분해 계산 시 필수적으로 사용됩니다.
+                    <!-- Mathematical Formula Block -->
+                    <div class="bg-editorial-panel p-4 border border-editorial-border space-y-3 font-serif">
+                        <div class="text-xs font-mono text-slate-400 uppercase">Vector Resolution Equations</div>
+                        <div class="text-center py-2 text-sky-300 text-sm bg-editorial-card border border-editorial-border">
+                            $$ F_x = |\vec{F}| \cos(\theta), \quad F_y = |\vec{F}| \sin(\theta) $$
+                        </div>
+                        <div class="text-center py-1 text-slate-300 text-xs">
+                            $$ |\vec{F}_{net}| = \sqrt{(\Sigma F_x)^2 + (\Sigma F_y)^2}, \quad \theta = \tan^{-1}\left(\frac{\Sigma F_y}{\Sigma F_x}\right) $$
+                        </div>
+                    </div>
+
+                    <div class="text-xs text-editorial-muted border-l-2 border-sky-500 pl-4 py-1 space-y-1">
+                        <span class="font-bold text-white block">스포츠 생체역학 응용</span>
+                        <p>대퇴사두근 건(Patellar Tendon)이 슬개골에 미치는 인장력 분해 시 관절 가속 성분과 압착 성분을 구분하는 표준 공식입니다.</p>
                     </div>
                 </div>
 
-                <!-- Interactive Canvas Component -->
-                <div class="lg:col-span-7 bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col justify-between">
+                <!-- Interactive Visualizer -->
+                <div class="lg:col-span-7 bg-editorial-panel p-5 border border-editorial-border flex flex-col justify-between space-y-4">
                     <div>
                         <div class="flex justify-between items-center mb-3">
-                            <h4 class="text-sm font-bold text-slate-800">인터랙티브 실습: 두 근육 힘의 합성 (Vector Addition)</h4>
-                            <span class="text-xs text-slate-500">슬라이더를 조절하세요</span>
+                            <span class="text-xs font-mono text-white uppercase"><i class="fa-solid fa-compass text-sky-400 mr-2"></i>Vector Addition Simulator</span>
+                            <span class="text-[11px] font-mono text-editorial-muted">Interactive Canvas</span>
                         </div>
 
-                        <!-- Canvas Area -->
-                        <div class="relative w-full bg-white border border-slate-300 rounded-md overflow-hidden h-64 shadow-inner">
+                        <!-- Canvas -->
+                        <div class="relative w-full bg-editorial-bg border border-editorial-border h-72 shadow-inner">
                             <canvas id="vectorCanvas" class="w-full h-full"></canvas>
                         </div>
                     </div>
 
-                    <!-- Controls -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 bg-white p-3 rounded border border-slate-200 text-xs">
+                    <!-- Sliders Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-editorial-card p-4 border border-editorial-border text-xs font-mono">
+                        <!-- Vector 1 -->
                         <div class="space-y-2">
-                            <div class="font-semibold text-blue-800">힘 Vector A (근육 1)</div>
-                            <div class="flex items-center space-x-2">
-                                <label class="w-12">크기(N):</label>
-                                <input type="range" id="f1-mag" min="10" max="150" value="80" class="w-full">
-                                <span id="f1-mag-val" class="w-8 text-right font-mono">80</span>
+                            <div class="text-sky-400 font-bold border-b border-editorial-border pb-1">VECTOR A (Muscle Force 1)</div>
+                            <div class="flex items-center justify-between">
+                                <label class="text-editorial-muted">Magnitude:</label>
+                                <input type="range" id="f1-mag" min="10" max="150" value="80" class="w-24">
+                                <span id="f1-mag-val" class="text-white font-mono w-8 text-right">80</span> N
                             </div>
-                            <div class="flex items-center space-x-2">
-                                <label class="w-12">각도(°):</label>
-                                <input type="range" id="f1-ang" min="0" max="180" value="30" class="w-full">
-                                <span id="f1-ang-val" class="w-8 text-right font-mono">30</span>
+                            <div class="flex items-center justify-between">
+                                <label class="text-editorial-muted">Angle ($\theta_1$):</label>
+                                <input type="range" id="f1-ang" min="0" max="180" value="30" class="w-24">
+                                <span id="f1-ang-val" class="text-white font-mono w-8 text-right">30</span>°
                             </div>
                         </div>
 
+                        <!-- Vector 2 -->
                         <div class="space-y-2">
-                            <div class="font-semibold text-red-800">힘 Vector B (근육 2)</div>
-                            <div class="flex items-center space-x-2">
-                                <label class="w-12">크기(N):</label>
-                                <input type="range" id="f2-mag" min="10" max="150" value="60" class="w-full">
-                                <span id="f2-mag-val" class="w-8 text-right font-mono">60</span>
+                            <div class="text-rose-400 font-bold border-b border-editorial-border pb-1">VECTOR B (Muscle Force 2)</div>
+                            <div class="flex items-center justify-between">
+                                <label class="text-editorial-muted">Magnitude:</label>
+                                <input type="range" id="f2-mag" min="10" max="150" value="60" class="w-24">
+                                <span id="f2-mag-val" class="text-white font-mono w-8 text-right">60</span> N
                             </div>
-                            <div class="flex items-center space-x-2">
-                                <label class="w-12">각도(°):</label>
-                                <input type="range" id="f2-ang" min="0" max="180" value="120" class="w-full">
-                                <span id="f2-ang-val" class="w-8 text-right font-mono">120</span>
+                            <div class="flex items-center justify-between">
+                                <label class="text-editorial-muted">Angle ($\theta_2$):</label>
+                                <input type="range" id="f2-ang" min="0" max="180" value="120" class="w-24">
+                                <span id="f2-ang-val" class="text-white font-mono w-8 text-right">120</span>°
                             </div>
                         </div>
                     </div>
-                    
-                    <div id="vectorResult" class="mt-2 text-xs font-mono bg-slate-800 text-green-400 p-2 rounded flex justify-between">
-                        <span>합력 $F_{net}$: 112.5 N</span>
-                        <span>방향 $\theta$: 68.2°</span>
+
+                    <!-- Calculation Output Bar -->
+                    <div id="vectorResult" class="text-xs font-mono bg-emerald-950/40 border border-emerald-800/80 text-emerald-400 p-3 flex justify-between items-center">
+                        <span>Resultant Force $F_{net}$: <strong>112.5 N</strong></span>
+                        <span>Resultant Angle $\Theta$: <strong>68.2°</strong></span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 2: KINEMATICS & ACCELERATION -->
-        <section id="acceleration" class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-            <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
-                <h2 class="text-lg font-serif font-semibold"><i class="fa-solid fa-person-running text-blue-400 mr-2"></i> Module 2. 운동학 및 가속도 (Kinematics & Acceleration)</h2>
-                <span class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded">운동의 시각화</span>
+        <!-- MODULE 2: KINEMATICS & ACCELERATION -->
+        <section id="acceleration" class="border border-editorial-border bg-editorial-card">
+            <div class="border-b border-editorial-border px-6 py-4 flex flex-wrap items-center justify-between gap-2 bg-editorial-panel/50">
+                <div class="flex items-center space-x-3">
+                    <span class="font-mono text-xs text-sky-400 border border-sky-900 bg-sky-950/60 px-2 py-0.5">MOD-02</span>
+                    <h2 class="font-serif font-bold text-lg text-white">2. 운동학 및 가속도 (Kinematics & Acceleration)</h2>
+                </div>
+                <span class="text-xs font-mono text-editorial-muted">MOTION & VELOCITY</span>
             </div>
 
-            <div class="p-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div class="p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
                 <!-- Theory -->
-                <div class="lg:col-span-5 space-y-4">
-                    <h3 class="text-md font-bold text-slate-800 border-b pb-2">선운동학의 핵심 법칙</h3>
-                    <p class="text-sm text-slate-600 leading-relaxed">
-                        운동학(Kinematics)은 힘을 고려하지 않고 인체의 위치(Position), 속도(Velocity), 가속도(Acceleration) 간의 시간적 변화 관계를 연구합니다.
-                    </p>
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="space-y-3">
+                        <h3 class="text-sm font-mono uppercase tracking-wider text-sky-400">Kinematic Equations</h3>
+                        <p class="text-xs md:text-sm text-editorial-muted leading-relaxed">
+                            운동학은 힘의 원인을 제외한 인체 질량중심의 **위치($x$), 속도($v$), 가속도($a$)**의 시간적 관계를 수식화합니다. 
+                            단거리 스프린트 착지나 방향 전환(Change of Direction) 시 순간 가속도의 미분값을 통해 파워를 도출합니다.
+                        </p>
+                    </div>
 
-                    <div class="space-y-3 text-xs">
-                        <div class="p-3 bg-slate-50 border border-slate-200 rounded">
-                            <span class="font-bold text-slate-800 block mb-1">1. 평균 가속도 (Average Acceleration)</span>
-                            $$ a = \frac{\Delta v}{\Delta t} = \frac{v_f - v_i}{t_f - t_i} \quad [\text{m/s}^2] $$
-                            <p class="text-slate-500 mt-1">단위 시간당 속도의 변화율을 의미합니다.</p>
+                    <div class="space-y-3 text-xs font-serif">
+                        <div class="p-4 bg-editorial-panel border border-editorial-border space-y-2">
+                            <span class="font-mono text-xs font-bold text-sky-400 block">01. Instantaneous Acceleration</span>
+                            $$ a(t) = \lim_{\Delta t \to 0} \frac{\Delta v}{\Delta t} = \frac{dv}{dt} = \frac{d^2x}{dt^2} $$
                         </div>
 
-                        <div class="p-3 bg-slate-50 border border-slate-200 rounded">
-                            <span class="font-bold text-slate-800 block mb-1">2. 등가속도 운동 방정식 (Constant Acceleration)</span>
-                            $$ v = v_0 + at $$
-                            $$ x = x_0 + v_0t + \frac{1}{2}at^2 $$
-                            $$ v^2 - v_0^2 = 2a(x - x_0) $$
+                        <div class="p-4 bg-editorial-panel border border-editorial-border space-y-2">
+                            <span class="font-mono text-xs font-bold text-sky-400 block">02. Linear Kinematics (Constant $a$)</span>
+                            $$ v = v_0 + at, \quad x = x_0 + v_0t + \frac{1}{2}at^2 $$
                         </div>
                     </div>
-                    
-                    <p class="text-xs text-slate-600">
-                        단단한 지면에서의 착지(Landing) 동작 시 임팩트 구간 동안 가속도가 음수(감속)로 극대화되어 수직지면반발력이 높아집니다.
-                    </p>
                 </div>
 
-                <!-- Interactive Kinematics Graph Simulation -->
-                <div class="lg:col-span-7 bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col justify-between">
+                <!-- Interactive Graph Simulator -->
+                <div class="lg:col-span-7 bg-editorial-panel p-5 border border-editorial-border flex flex-col justify-between space-y-4">
                     <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-sm font-bold text-slate-800">100m 단거리 질주 실습: $v(t)$ 및 $a(t)$ 그래프 시뮬레이션</h4>
-                            <button id="runAnimBtn" class="bg-blue-900 hover:bg-blue-800 text-white px-3 py-1 rounded text-xs transition">
-                                <i class="fa-solid fa-play mr-1"></i> 달리기 실행
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-mono text-white uppercase"><i class="fa-solid fa-chart-line text-sky-400 mr-2"></i>100m Sprint Velocity Curve $v(t)$</span>
+                            <button id="runAnimBtn" class="bg-sky-500 hover:bg-sky-400 text-slate-950 font-mono font-bold px-3 py-1 text-xs transition uppercase tracking-wider">
+                                <i class="fa-solid fa-play mr-1"></i> Start Run
                             </button>
                         </div>
 
-                        <div class="bg-white border border-slate-300 rounded-md p-2 h-60 relative">
+                        <!-- Graph Canvas -->
+                        <div class="bg-editorial-bg border border-editorial-border p-2 h-64 relative">
                             <canvas id="kinematicsCanvas" class="w-full h-full"></canvas>
                         </div>
                     </div>
 
-                    <div class="mt-4 bg-white p-3 rounded border border-slate-200 text-xs grid grid-cols-2 gap-4">
+                    <!-- Parameters Controls -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-editorial-card p-4 border border-editorial-border text-xs font-mono">
                         <div>
-                            <label class="block font-semibold text-slate-700 mb-1">초기 폭발적 가속도 ($a_{start}$):</label>
+                            <label class="block text-editorial-muted mb-1">Initial Acceleration ($a_0$):</label>
                             <input type="range" id="accel-param" min="1.5" max="5.0" step="0.1" value="3.5" class="w-full">
-                            <span class="text-slate-500">값: <span id="accel-param-val" class="font-mono">3.5</span> $\text{m/s}^2$</span>
+                            <span class="text-sky-400 font-mono"><span id="accel-param-val">3.5</span> $\text{m/s}^2$</span>
                         </div>
                         <div>
-                            <label class="block font-semibold text-slate-700 mb-1">최고 속도 제한 ($v_{max}$):</label>
+                            <label class="block text-editorial-muted mb-1">Max Velocity ($v_{max}$):</label>
                             <input type="range" id="vmax-param" min="7" max="12" step="0.5" value="10.5" class="w-full">
-                            <span class="text-slate-500">값: <span id="vmax-param-val" class="font-mono">10.5</span> $\text{m/s}$</span>
+                            <span class="text-sky-400 font-mono"><span id="vmax-param-val">10.5</span> $\text{m/s}$</span>
                         </div>
                     </div>
-                    
-                    <div class="mt-2 text-xs text-slate-600 bg-slate-200 p-2 rounded flex justify-around font-mono">
-                        <div>도달 거리: <span id="dist-res">0.0</span> m</div>
-                        <div>현재 속도: <span id="vel-res">0.0</span> m/s</div>
-                        <div>현재 가속도: <span id="acc-res">0.0</span> m/s²</div>
+
+                    <!-- Telemetry Data -->
+                    <div class="text-xs font-mono bg-editorial-card border border-editorial-border p-3 grid grid-cols-3 text-center text-slate-300">
+                        <div>Dist: <span id="dist-res" class="text-sky-400 font-bold">0.0</span> m</div>
+                        <div>Vel: <span id="vel-res" class="text-sky-400 font-bold">0.0</span> m/s</div>
+                        <div>Accel: <span id="acc-res" class="text-sky-400 font-bold">0.0</span> m/s²</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 3: FORCES & NEWTON'S LAWS -->
-        <section id="forces" class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-            <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
-                <h2 class="text-lg font-serif font-semibold"><i class="fa-solid fa-dumbbell text-blue-400 mr-2"></i> Module 3. 역학 및 힘 (Kinetics: Forces & Newton's Laws)</h2>
-                <span class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded">원인 분석</span>
+        <!-- MODULE 3: FORCES & NEWTON'S LAWS -->
+        <section id="forces" class="border border-editorial-border bg-editorial-card">
+            <div class="border-b border-editorial-border px-6 py-4 flex flex-wrap items-center justify-between gap-2 bg-editorial-panel/50">
+                <div class="flex items-center space-x-3">
+                    <span class="font-mono text-xs text-sky-400 border border-sky-900 bg-sky-950/60 px-2 py-0.5">MOD-03</span>
+                    <h2 class="font-serif font-bold text-lg text-white">3. 역학 및 힘 (Kinetics & Newton's Laws)</h2>
+                </div>
+                <span class="text-xs font-mono text-editorial-muted">DYNAMIC FORCES</span>
             </div>
 
-            <div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Laws Grid -->
+            <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Law 1 -->
-                <div class="p-4 border border-slate-200 rounded-lg bg-slate-50 hover:border-blue-300 transition">
-                    <div class="text-xs font-bold text-blue-800 uppercase mb-1">First Law</div>
-                    <h3 class="font-bold text-slate-800 text-md mb-2">관성의 법칙 (Inertia)</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">
-                        알짜힘(Net Force)이 0일 때, 정지해 있는 물체는 계속 정지해 있고 운동하는 물체는 등속 직선 운동을 유지합니다.
+                <div class="p-5 border border-editorial-border bg-editorial-panel space-y-3">
+                    <span class="text-[10px] font-mono text-sky-400 uppercase tracking-widest border border-sky-900 px-2 py-0.5 bg-sky-950/40">1st Law</span>
+                    <h3 class="font-bold text-white text-base font-serif">관성의 법칙 (Inertia)</h3>
+                    <p class="text-xs text-editorial-muted leading-relaxed">
+                        알짜힘(Net Force)이 0일 때, 물체는 자신의 현재 운동 상태(정지 또는 등속)를 영구히 유지하려 합니다.
                     </p>
-                    <div class="mt-3 text-center text-xs font-serif bg-white p-2 border rounded">
+                    <div class="text-center text-xs font-serif bg-editorial-card p-2 border border-editorial-border text-sky-300">
                         $$ \sum \vec{F} = 0 \implies \vec{a} = 0 $$
                     </div>
-                    <span class="block mt-2 text-[11px] text-slate-500">예: 스케이트보드 탑승 중 급정지 시 몸이 앞으로 쏠리는 현상.</span>
                 </div>
 
                 <!-- Law 2 -->
-                <div class="p-4 border border-slate-200 rounded-lg bg-slate-50 hover:border-blue-300 transition">
-                    <div class="text-xs font-bold text-blue-800 uppercase mb-1">Second Law</div>
-                    <h3 class="font-bold text-slate-800 text-md mb-2">가속도의 법칙 (Acceleration)</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">
-                        물체에 작용하는 가속도는 가해진 알짜힘에 비례하고 물체의 질량에 반비례합니다.
+                <div class="p-5 border border-editorial-border bg-editorial-panel space-y-3">
+                    <span class="text-[10px] font-mono text-sky-400 uppercase tracking-widest border border-sky-900 px-2 py-0.5 bg-sky-950/40">2nd Law</span>
+                    <h3 class="font-bold text-white text-base font-serif">가속도의 법칙 (Momentum)</h3>
+                    <p class="text-xs text-editorial-muted leading-relaxed">
+                        물체에 가해지는 알짜힘은 질량과 가속도의 곱과 같으며, 운동량의 시간 변화율과 동일합니다.
                     </p>
-                    <div class="mt-3 text-center text-xs font-serif bg-white p-2 border rounded">
-                        $$ \sum \vec{F} = m \vec{a} $$
+                    <div class="text-center text-xs font-serif bg-editorial-card p-2 border border-editorial-border text-sky-300">
+                        $$ \sum \vec{F} = m\vec{a} = \frac{d\vec{p}}{dt} $$
                     </div>
-                    <span class="block mt-2 text-[11px] text-slate-500">예: 동일한 근력으로 투포환(무거움)과 공(가벼움)을 던질 때의 가속도 차이.</span>
                 </div>
 
                 <!-- Law 3 -->
-                <div class="p-4 border border-slate-200 rounded-lg bg-slate-50 hover:border-blue-300 transition">
-                    <div class="text-xs font-bold text-blue-800 uppercase mb-1">Third Law</div>
-                    <h3 class="font-bold text-slate-800 text-md mb-2">작용·반작용 (Action-Reaction)</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">
-                        한 물체가 다른 물체에 힘을 가할 때, 동시에 동일한 크기의 반대 방향 힘이 가해집니다.
+                <div class="p-5 border border-editorial-border bg-editorial-panel space-y-3">
+                    <span class="text-[10px] font-mono text-sky-400 uppercase tracking-widest border border-sky-900 px-2 py-0.5 bg-sky-950/40">3rd Law</span>
+                    <h3 class="font-bold text-white text-base font-serif">작용·반작용 (GRF)</h3>
+                    <p class="text-xs text-editorial-muted leading-relaxed">
+                        한 물체가 다른 물체에 힘을 가하면 크기가 같고 방향이 반대인 힘이 동시 작용합니다 (지면반발력).
                     </p>
-                    <div class="mt-3 text-center text-xs font-serif bg-white p-2 border rounded">
+                    <div class="text-center text-xs font-serif bg-editorial-card p-2 border border-editorial-border text-sky-300">
                         $$ \vec{F}_{A \to B} = -\vec{F}_{B \to A} $$
                     </div>
-                    <span class="block mt-2 text-[11px] text-slate-500">예: 점프 시 지면을 미는 힘(작용)과 지면반발력(GRF, 반작용).</span>
                 </div>
             </div>
 
-            <!-- Free Body Diagram Visualizer -->
-            <div class="px-6 pb-6">
-                <div class="bg-slate-100 p-4 rounded-lg border border-slate-200">
-                    <h4 class="text-sm font-bold text-slate-800 mb-2"><i class="fa-solid fa-child mr-2"></i> 자유물체도 (Free-Body Diagram) 예시: 스쿼트 동작 시 작용하는 수직 힘</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                        <div class="bg-white p-3 rounded border border-slate-200 space-y-2">
-                            <div class="font-semibold text-slate-700">작용하는 주요 외력</div>
-                            <ul class="list-disc list-inside space-y-1 text-slate-600">
-                                />
-                                <li><strong>중력 ($W = mg$):</strong> 체중 및 바벨에 의해 아래쪽으로 작용.</li>
-                                <li><strong>지면반발력 ($GRF$):</strong> 발바닥에 수직 위쪽으로 작용.</li>
-                                <li><strong>상태:</strong> 정지 상태 또는 등속으로 움직일 때 $GRF = W$.</li>
-                            </ul>
-                        </div>
-                        <div class="bg-white p-3 rounded border border-slate-200 space-y-2">
-                            <div class="font-semibold text-slate-700">가속 수직 운동 시 조건</div>
-                            <p class="text-slate-600">
-                                상향 가속($a > 0$)하며 일어설 때:
+            <!-- Free Body Diagram Explanatory Box -->
+            <div class="px-6 md:px-8 pb-8">
+                <div class="bg-editorial-panel p-6 border border-editorial-border space-y-4">
+                    <h4 class="text-xs font-mono text-sky-400 uppercase tracking-wider"><i class="fa-solid fa-child-reaching mr-2"></i>Free Body Diagram Analysis: Squat & Landing</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+                        <div class="space-y-2 border-l border-editorial-border pl-4">
+                            <span class="text-white font-bold block">정적 평형 상태 (Static Equilibrium)</span>
+                            <p class="text-editorial-muted leading-relaxed">
+                                바벨 스쿼트 보류 구간에서 인체에 작용하는 하향 중력($W=mg$)과 지면이 밀어올리는 지면반발력($GRF$)은 완벽한 알짜힘 0 상태를 형성합니다.
                             </p>
-                            <div class="font-serif text-center bg-slate-50 p-1.5 border rounded text-blue-900">
-                                $$ GRF - mg = ma \implies GRF = m(g + a) $$
-                            </div>
-                            <p class="text-slate-500 text-[11px]">가속도가 클수록 순간 지면반발력(GRF)이 증가하여 관절 수축 부담이 높아집니다.</p>
+                        </div>
+                        <div class="space-y-2 border-l border-sky-500 pl-4">
+                            <span class="text-white font-bold block">동적 가속 구간 (Vertical Acceleration)</span>
+                            <p class="text-editorial-muted leading-relaxed">
+                                상향 가속($a > 0$)하며 일어설 때는 추가적인 가속 힘이 필요하여 순간 $GRF = m(g + a)$ 로 크게 증가합니다.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 4: PRACTICE PROBLEMS -->
-        <section id="problems" class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-            <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
-                <h2 class="text-lg font-serif font-semibold"><i class="fa-solid fa-pen-to-square text-blue-400 mr-2"></i> 수강생 자가 평가 문제 (Self-Assessment Problems)</h2>
-                <span class="text-xs bg-blue-800 text-white px-2.5 py-1 rounded">Formative Evaluation</span>
+        <!-- MODULE 4: PRACTICE PROBLEMS -->
+        <section id="problems" class="border border-editorial-border bg-editorial-card">
+            <div class="border-b border-editorial-border px-6 py-4 flex flex-wrap items-center justify-between gap-2 bg-editorial-panel/50">
+                <div class="flex items-center space-x-3">
+                    <span class="font-mono text-xs text-sky-400 border border-sky-900 bg-sky-950/60 px-2 py-0.5">MOD-04</span>
+                    <h2 class="font-serif font-bold text-lg text-white">4. 자가 평가 및 학술 연습 문제 (Academic Problems)</h2>
+                </div>
+                <span class="text-xs font-mono text-editorial-muted">SELF EVALUATION</span>
             </div>
 
-            <div class="p-6 space-y-6">
+            <div class="p-6 md:p-8 space-y-6">
                 <!-- Problem 1 -->
-                <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
-                    <div class="flex justify-between items-start">
-                        <span class="text-xs font-bold text-blue-900 bg-blue-100 px-2 py-0.5 rounded">문제 01. 벡터 분해</span>
-                        <span class="text-xs text-slate-400">난이도: 하</span>
+                <div class="border border-editorial-border bg-editorial-panel p-5 space-y-3">
+                    <div class="flex justify-between items-center text-xs font-mono">
+                        <span class="text-sky-400 font-bold">PROBLEM 01. Vector Resolution</span>
+                        <span class="text-editorial-muted">Difficulty: Easy</span>
                     </div>
-                    <p class="text-sm font-medium text-slate-800 mt-2">
-                        어떤 선수가 족관절(Ankle)에 $F = 200\,\text{N}$의 인장력을 $30^\circ$ 각도로 가하고 있다. 
-                        이 힘의 수평 성분($F_x$)과 수직 성분($F_y$)을 구하시오. ($\cos 30^\circ \approx 0.866$, $\sin 30^\circ = 0.5$)
+                    <p class="text-xs md:text-sm text-slate-200 leading-relaxed font-normal">
+                        선수의 족관절(Ankle)에 가해지는 인장력 $F = 200\,\text{N}$ 이 수평선과 $30^\circ$ 각도를 형성할 때, 
+                        수평 성분 $F_x$와 수직 성분 $F_y$의 크기를 계산하시오. ($\cos 30^\circ \approx 0.866$, $\sin 30^\circ = 0.5$)
                     </p>
-                    <div class="mt-3">
-                        <button onclick="toggleAnswer('ans1')" class="text-xs bg-slate-800 text-white px-3 py-1.5 rounded hover:bg-slate-700 transition">
-                            <i class="fa-solid fa-key mr-1"></i> 정답 및 풀이 보기
+                    <div>
+                        <button onclick="toggleAnswer('ans1')" class="bg-editorial-card border border-editorial-border hover:border-sky-500 text-sky-400 font-mono text-xs px-3 py-1.5 transition">
+                            <i class="fa-solid fa-terminal mr-1"></i> Toggle Solution
                         </button>
-                        <div id="ans1" class="hidden mt-3 p-3 bg-white border border-slate-200 rounded text-xs space-y-1 text-slate-700">
-                            <div><strong>풀이:</strong></div>
-                            <div>수평 성분: $F_x = F \cdot \cos(30^\circ) = 200 \times 0.866 = 173.2\,\text{N}$</div>
-                            <div>수직 성분: $F_y = F \cdot \sin(30^\circ) = 200 \times 0.5 = 100.0\,\text{N}$</div>
+                        <div id="ans1" class="hidden mt-3 p-4 bg-editorial-bg border border-editorial-border text-xs font-mono space-y-1 text-slate-300">
+                            <div class="text-sky-400 font-bold mb-1">[SOLUTION]</div>
+                            <div>Horizontal Component: $F_x = 200 \times \cos(30^\circ) = 173.2\,\text{N}$</div>
+                            <div>Vertical Component: $F_y = 200 \times \sin(30^\circ) = 100.0\,\text{N}$</div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Problem 2 -->
-                <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
-                    <div class="flex justify-between items-start">
-                        <span class="text-xs font-bold text-blue-900 bg-blue-100 px-2 py-0.5 rounded">문제 02. 가속도 및 지면반발력</span>
-                        <span class="text-xs text-slate-400">난이도: 중</span>
+                <div class="border border-editorial-border bg-editorial-panel p-5 space-y-3">
+                    <div class="flex justify-between items-center text-xs font-mono">
+                        <span class="text-sky-400 font-bold">PROBLEM 02. Impact Landing Acceleration</span>
+                        <span class="text-xs text-editorial-muted">Difficulty: Intermediate</span>
                     </div>
-                    <p class="text-sm font-medium text-slate-800 mt-2">
-                        질량이 $70\,\text{kg}$인 육상 선수가 점프 수직 착지 중 $0.1\,\text{초}$ 동안 속도가 $3\,\text{m/s}$에서 $0\,\text{m/s}$로 감소하였다. 
-                        착지 동안 선수가 받게 되는 평균 지면반발력(GRF)의 크기는 얼마인가? (단, 중력가속도 $g = 9.81\,\text{m/s}^2$)
+                    <p class="text-xs md:text-sm text-slate-200 leading-relaxed font-normal">
+                        질량 $70\,\text{kg}$인 육상 선수가 점프 후 착지 시 $0.1\,\text{초}$ 동안 속도가 $3\,\text{m/s}$에서 $0\,\text{m/s}$로 정지하였다. 
+                        착지 동안 작용한 평균 수직 지면반발력(GRF)의 크기를 구하시오. ($g = 9.81\,\text{m/s}^2$)
                     </p>
-                    <div class="mt-3">
-                        <button onclick="toggleAnswer('ans2')" class="text-xs bg-slate-800 text-white px-3 py-1.5 rounded hover:bg-slate-700 transition">
-                            <i class="fa-solid fa-key mr-1"></i> 정답 및 풀이 보기
+                    <div>
+                        <button onclick="toggleAnswer('ans2')" class="bg-editorial-card border border-editorial-border hover:border-sky-500 text-sky-400 font-mono text-xs px-3 py-1.5 transition">
+                            <i class="fa-solid fa-terminal mr-1"></i> Toggle Solution
                         </button>
-                        <div id="ans2" class="hidden mt-3 p-3 bg-white border border-slate-200 rounded text-xs space-y-1 text-slate-700">
-                            <div><strong>풀이:</strong></div>
-                            <div>1) 평균 가속도 크기: $a = \frac{|\Delta v|}{\Delta t} = \frac{3 - 0}{0.1} = 30\,\text{m/s}^2$ (상향)</div>
-                            <div>2) 뉴턴 제2법칙: $GRF - mg = ma \implies GRF = m(g + a)$</div>
-                            <div>3) $GRF = 70 \times (9.81 + 30) = 70 \times 39.81 = 2,786.7\,\text{N}$</div>
-                            <div class="text-blue-900">체중($70 \times 9.81 = 686.7\,\text{N}$)의 약 4배에 달하는 충격력이 발생함.</div>
+                        <div id="ans2" class="hidden mt-3 p-4 bg-editorial-bg border border-editorial-border text-xs font-mono space-y-1 text-slate-300">
+                            <div class="text-sky-400 font-bold mb-1">[SOLUTION]</div>
+                            <div>1) Deceleration Magnitude: $a = \frac{\Delta v}{\Delta t} = \frac{3}{0.1} = 30\,\text{m/s}^2$</div>
+                            <div>2) Force Balance Equation: $GRF - mg = ma \implies GRF = m(g + a)$</div>
+                            <div>3) Result: $GRF = 70 \times (9.81 + 30) = 2,786.7\,\text{N}$ (체중의 약 4배 충격)</div>
                         </div>
                     </div>
                 </div>
@@ -399,30 +446,29 @@
 
     </main>
 
-    <!-- Footer Section -->
-    <footer class="bg-navy-950 text-slate-400 py-6 border-t border-slate-800 text-xs">
-        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
-            <p class="font-serif text-slate-300">Department of Kinesiology & Physical Education — Biomechanics Lab</p>
-            <p>© 2026 University Courseware System. All Rights Reserved.</p>
+    <!-- Footer -->
+    <footer class="border-t border-editorial-border bg-editorial-card py-8 text-xs font-mono text-editorial-muted">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <p class="text-white font-bold font-serif">DEPARTMENT OF KINESIOLOGY & BIOMECHANICS</p>
+                <p class="text-[11px] text-slate-500">Academic Courseware Interface — Taste-Skill Editorial Standard</p>
+            </div>
+            <p>© 2026 Biomechanics Learning Portal. All Rights Reserved.</p>
         </div>
     </footer>
 
-    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <!-- INTERACTIVE SCRIPT LOGIC -->
     <script>
-        // Toggle Mobile Menu
+        // Mobile Navigation Toggle
         document.getElementById('mobile-menu-btn').addEventListener('click', () => {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         });
 
-        // Toggle Answer Display
+        // Solution Display Toggle
         function toggleAnswer(id) {
             const el = document.getElementById(id);
-            if (el.classList.contains('hidden')) {
-                el.classList.remove('hidden');
-            } else {
-                el.classList.add('hidden');
-            }
+            el.classList.toggle('hidden');
         }
 
         // ==========================================
@@ -443,6 +489,7 @@
         const vectorResult = document.getElementById('vectorResult');
 
         function resizeVectorCanvas() {
+            if (!vecCanvas.parentElement) return;
             const rect = vecCanvas.parentElement.getBoundingClientRect();
             vecCanvas.width = rect.width;
             vecCanvas.height = rect.height;
@@ -450,7 +497,7 @@
         }
 
         function drawArrow(ctx, fromx, fromy, tox, toy, color, label) {
-            const headlen = 10;
+            const headlen = 8;
             const dx = tox - fromx;
             const dy = toy - fromy;
             const angle = Math.atan2(dy, dx);
@@ -458,7 +505,7 @@
             ctx.beginPath();
             ctx.strokeStyle = color;
             ctx.fillStyle = color;
-            ctx.lineWidth = 3;
+            ctx.lineWidth = 2.5;
             ctx.moveTo(fromx, fromy);
             ctx.lineTo(tox, toy);
             ctx.stroke();
@@ -473,24 +520,24 @@
 
             // Label
             if(label) {
-                ctx.font = '11px sans-serif';
-                ctx.fillText(label, tox + 5, toy - 5);
+                ctx.font = '11px JetBrains Mono';
+                ctx.fillText(label, tox + (dx >= 0 ? 8 : -18), toy + (dy >= 0 ? 12 : -8));
             }
         }
 
         function drawVectors() {
-            if(!vecCanvas.width) return;
+            if (!vecCanvas.width) return;
 
             const w = vecCanvas.width;
             const h = vecCanvas.height;
             const originX = w / 2;
-            const originY = h - 30;
+            const originY = h - 40;
 
             vecCtx.clearRect(0, 0, w, h);
 
-            // Axes
+            // Grid Axes
             vecCtx.beginPath();
-            vecCtx.strokeStyle = '#e2e8f0';
+            vecCtx.strokeStyle = '#2a3040';
             vecCtx.lineWidth = 1;
             vecCtx.moveTo(0, originY);
             vecCtx.lineTo(w, originY);
@@ -498,7 +545,7 @@
             vecCtx.lineTo(originX, h);
             vecCtx.stroke();
 
-            // Values
+            // Slider Inputs
             const f1 = parseFloat(f1MagInput.value);
             const a1 = parseFloat(f1AngInput.value) * (Math.PI / 180);
             const f2 = parseFloat(f2MagInput.value);
@@ -509,25 +556,21 @@
             f2MagVal.textContent = f2;
             f2AngVal.textContent = f2AngInput.value;
 
-            // Scale factor (pixel per Newton)
-            const scale = 1.0;
+            const scale = 1.1;
 
-            // Vector 1 end
             const v1x = f1 * Math.cos(a1) * scale;
-            const v1y = -f1 * Math.sin(a1) * scale; // Canvas Y inverted
+            const v1y = -f1 * Math.sin(a1) * scale;
 
-            // Vector 2 end
             const v2x = f2 * Math.cos(a2) * scale;
             const v2y = -f2 * Math.sin(a2) * scale;
 
-            // Resultant
             const rx = v1x + v2x;
             const ry = v1y + v2y;
 
-            // Parallelogram Guide Lines
+            // Parallelogram Dotted Lines
             vecCtx.beginPath();
             vecCtx.setLineDash([3, 3]);
-            vecCtx.strokeStyle = '#94a3b8';
+            vecCtx.strokeStyle = '#64748b';
             vecCtx.moveTo(originX + v1x, originY + v1y);
             vecCtx.lineTo(originX + rx, originY + ry);
             vecCtx.moveTo(originX + v2x, originY + v2y);
@@ -535,17 +578,17 @@
             vecCtx.stroke();
             vecCtx.setLineDash([]);
 
-            // Draw Vectors
-            drawArrow(vecCtx, originX, originY, originX + v1x, originY + v1y, '#1e3a8a', 'A');
-            drawArrow(vecCtx, originX, originY, originX + v2x, originY + v2y, '#991b1b', 'B');
-            drawArrow(vecCtx, originX, originY, originX + rx, originY + ry, '#166534', 'Net');
+            // Render Vectors
+            drawArrow(vecCtx, originX, originY, originX + v1x, originY + v1y, '#38bdf8', 'A');
+            drawArrow(vecCtx, originX, originY, originX + v2x, originY + v2y, '#f43f5e', 'B');
+            drawArrow(vecCtx, originX, originY, originX + rx, originY + ry, '#10b981', 'Net');
 
-            // Calculate Mag and Angle for Result
+            // Result Calculation
             const netMag = Math.sqrt(Math.pow(f1 * Math.cos(a1) + f2 * Math.cos(a2), 2) + Math.pow(f1 * Math.sin(a1) + f2 * Math.sin(a2), 2));
             let netAng = Math.atan2(f1 * Math.sin(a1) + f2 * Math.sin(a2), f1 * Math.cos(a1) + f2 * Math.cos(a2)) * (180 / Math.PI);
             if (netAng < 0) netAng += 360;
 
-            vectorResult.innerHTML = `<span>합력 $F_{net}$: <strong>${netMag.toFixed(1)} N</strong></span> <span>방향 $\\theta$: <strong>${netAng.toFixed(1)}°</strong></span>`;
+            vectorResult.innerHTML = `<span>Resultant Force $F_{net}$: <strong>${netMag.toFixed(1)} N</strong></span> <span>Direction Angle $\\Theta$: <strong>${netAng.toFixed(1)}°</strong></span>`;
             if (window.MathJax) {
                 MathJax.typesetPromise([vectorResult]);
             }
@@ -573,9 +616,10 @@
 
         let animFrame;
         let simTime = 0;
-        const maxSimTime = 10; // 10 seconds simulation
+        const maxSimTime = 10;
 
         function resizeKinCanvas() {
+            if (!kinCanvas.parentElement) return;
             const rect = kinCanvas.parentElement.getBoundingClientRect();
             kinCanvas.width = rect.width;
             kinCanvas.height = rect.height;
@@ -600,25 +644,22 @@
 
             // Draw Axes
             kinCtx.beginPath();
-            kinCtx.strokeStyle = '#cbd5e1';
+            kinCtx.strokeStyle = '#2a3040';
             kinCtx.lineWidth = 1;
             kinCtx.moveTo(padding, padding);
             kinCtx.lineTo(padding, h - padding);
             kinCtx.lineTo(w - padding, h - padding);
             kinCtx.stroke();
 
-            // Labels
-            kinCtx.font = '10px sans-serif';
+            // Axes Labels
+            kinCtx.font = '10px JetBrains Mono';
             kinCtx.fillStyle = '#64748b';
-            kinCtx.fillText('시간 t (초)', w - padding - 20, h - padding + 20);
-            kinCtx.fillText('속도 v (m/s)', padding - 25, padding - 10);
+            kinCtx.fillText('t (s)', w - padding - 15, h - padding + 20);
+            kinCtx.fillText('v (m/s)', padding - 25, padding - 10);
 
-            // Time scaling: 0 to 10s
-            // Velocity scaling: 0 to 15 m/s
             const points = [];
             let currentV = 0;
             let currentX = 0;
-            let currentA = a0;
 
             const dt = 0.05;
             let activeV = 0;
@@ -626,8 +667,6 @@
             let activeA = a0;
 
             for (let t = 0; t <= maxSimTime; t += dt) {
-                // Simple exponential approach model to vmax
-                // dv/dt = a0 * (1 - v/vmax)
                 const instA = Math.max(0, a0 * (1 - currentV / vmax));
                 currentV += instA * dt;
                 currentX += currentV * dt;
@@ -644,26 +683,26 @@
                 }
             }
 
-            // Draw Velocity Curve
+            // Curve Line
             kinCtx.beginPath();
-            kinCtx.strokeStyle = '#1e3a8a';
-            kinCtx.lineWidth = 2.5;
+            kinCtx.strokeStyle = '#38bdf8';
+            kinCtx.lineWidth = 2;
             points.forEach((p, idx) => {
                 if (idx === 0) kinCtx.moveTo(p.x, p.y);
                 else kinCtx.lineTo(p.x, p.y);
             });
             kinCtx.stroke();
 
-            // Render Animated Cursor Point
+            // Cursor Point
             const currPx = padding + (currentTime / maxSimTime) * graphW;
             const currPy = (h - padding) - (activeV / 15) * graphH;
 
             kinCtx.beginPath();
-            kinCtx.fillStyle = '#dc2626';
-            kinCtx.arc(currPx, currPy, 5, 0, Math.PI * 2);
+            kinCtx.fillStyle = '#f43f5e';
+            kinCtx.arc(currPx, currPy, 4, 0, Math.PI * 2);
             kinCtx.fill();
 
-            // Update Numerical Dashboard
+            // Telemetry Update
             distRes.textContent = activeX.toFixed(1);
             velRes.textContent = activeV.toFixed(1);
             accRes.textContent = activeA.toFixed(2);
@@ -690,7 +729,6 @@
         accelParam.addEventListener('input', () => drawKinematicsGraph(simTime));
         vmaxParam.addEventListener('input', () => drawKinematicsGraph(simTime));
 
-        // Window Resize Handling
         window.addEventListener('resize', () => {
             resizeVectorCanvas();
             resizeKinCanvas();
